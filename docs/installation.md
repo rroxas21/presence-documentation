@@ -143,11 +143,3 @@ Before proceeding with any installation method, ensure you have the following:
 - Clean the build folder (`Shift + ⌘ + K`) and rebuild the project.
 - Verify that all dependencies are correctly installed and compatible.
 </details>
-
-## Support
-
-For additional assistance, please contact:
-- Technical Support: support@yourcompany.com
-- Developer Portal: developer.yourcompany.com
-
----
