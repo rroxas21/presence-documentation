@@ -16,23 +16,21 @@ This guide provides instructions for installing this application on an Apple Vis
 
 Before proceeding with any installation method, ensure you have the following:
 
-* An Apple Vision Pro device running visionOS 1.0 or later
-* A Mac computer with macOS Sonoma 14.1 or later
-* Xcode 15.1 or later installed on your Mac
-* An Apple Developer account (paid or free, depending on distribution needs)
+* An Apple Vision Pro device running visionOS 2.0 or later
+* A Mac computer with macOS 15 Sequoia or later
+* Xcode 16 or later installed on your Mac
+* njitresearch63@gmail.com account
 * USB-C to USB-C cable for connecting your Mac to the Vision Pro
 * Apple Vision Pro Developer Strap (recommended for development)
 
-## Installation Methods
-
-### Method 1: Via Xcode
+## Installation Method From Xcode to Vision Pro
 
 #### Step 1: Configure Your Development Environment
 
 1. Launch Xcode on your Mac.
 2. Go to Xcode → Settings → Accounts.
 3. Add your Apple ID if not already configured.
-4. Select your Apple ID and click "Manage Certificates" to ensure you have a valid Developer certificate.
+4. Select your Apple ID (njitresearch63) and click "Manage Certificates" to ensure you have a valid Developer certificate.
 
 #### Step 2: Connect Your Apple Vision Pro
 
@@ -44,43 +42,19 @@ Before proceeding with any installation method, ensure you have the following:
 #### Step 3: Open and Build the Project
 
 1. Open the app project in Xcode.
-2. In the top navigation bar, select your connected Apple Vision Pro as the deployment target.
-3. Select the appropriate build scheme for your app.
-4. Click the "Run" button (▶️) in the Xcode toolbar or use shortcut `⌘R`.
+2. Go to Window > Devices and Simulators
+3. Find Vision Pro: listed in the left-hand column under "Devices"
+4. Select your Vision Pro and click the "Pair" button
+5. A code will appear on your Mac and you'll need to enter it on your Vision Pro when prompted
+6. Select the appropriate build scheme for your app.
+7. Click the "Run" button (▶️) in the Xcode toolbar or use shortcut `⌘R`.
 
 #### Step 4: Authorize App Installation
 
 1. When prompted on your Apple Vision Pro, look at the notification and select "Allow" to install the developer app.
 2. Wait for the installation to complete. The app will automatically launch after successful installation.
 
-### Method 2: From Google Drive
-
-#### Step 1: Prepare the App Package
-
-1. Ensure you have an IPA file or TestFlight invitation link for your app.
-2. Upload the IPA file to your Google Drive account.
-
-#### Step 2: Install from Google Drive (TestFlight Method)
-
-1. On your Mac, open a browser and navigate to your Google Drive.
-2. Locate the TestFlight invitation link document or email.
-3. While wearing your Apple Vision Pro, open Safari.
-4. Navigate to your Google Drive account or open the shared link.
-5. Click on the TestFlight invitation link.
-6. Follow the on-screen instructions to redeem the code and install the app via TestFlight.
-
-#### Step 3: Install from Google Drive (Direct IPA Method - for Enterprise Distribution)
-
-1. On your Mac, download the IPA file from Google Drive.
-2. Connect your Apple Vision Pro to your Mac.
-3. Launch Xcode.
-4. Go to Window → Devices and Simulators.
-5. Select your connected Apple Vision Pro in the left sidebar.
-6. In the "Installed Apps" section, click the "+" button.
-7. Navigate to and select the IPA file you downloaded.
-8. Click "Open" to install the app on your device.
-
-### Method 3: From GitHub
+## Installing Presence app from github to Xcode (if not already installed)
 
 #### Step 1: Clone the Repository
 
