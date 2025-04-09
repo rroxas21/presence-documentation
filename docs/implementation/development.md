@@ -1,4 +1,5 @@
-# Development
+# Development 
+
 ## Project Structure
 
 The Presence app follows this structure based on the provided files:
@@ -11,12 +12,15 @@ Presence/
 │   ├── ContentView.swift     # Main interface
 │   ├── PlaybackControlsView.swift # Video playback controls
 │   ├── Immersive360View.swift # 360° video immersive view
+│   ├── ImmersiveView.swift   # Alternative immersive view using RealityKitContent
 │   └── AVPlayerView.swift    # UIKit player wrapper
 ├── Models/                   # Data models and managers
 │   ├── VideoStreamManager.swift # Video playback and streaming manager
-│   └── VideoMaterial.swift   # RealityKit material handling
+│   ├── VideoMaterial.swift   # RealityKit material handling
+│   └── AVPlayerViewModel.swift # UIKit player view model
 ├── Resources/                # Assets and resources
 │   ├── Assets.xcassets       # Image assets
+│   ├── RealityKitContent     # RealityKit content bundle
 │   └── Videos/               # 360° video content (e.g., "Cable Car.mp4")
 ├── Info.plist                # App configuration
 └── Presence.entitlements     # App entitlements
@@ -121,6 +125,69 @@ struct ContentView: View {
 }
 ```
 
+### 6. AVPlayerViewModel and AVPlayerView
+
+The `AVPlayerViewModel` class manages UIKit-based video playback:
+
+```swift
+@MainActor
+@Observable
+class AVPlayerViewModel: NSObject {
+    var isPlaying: Bool = false
+    private var avPlayerViewController: AVPlayerViewController?
+    private var avPlayer = AVPlayer()
+    
+    func makePlayerViewController() -> AVPlayerViewController { ... }
+    func play() { ... }
+    func reset() { ... }
+}
+```
+
+The accompanying `AVPlayerView` provides SwiftUI integration:
+
+```swift
+struct AVPlayerView: UIViewControllerRepresentable {
+    let viewModel: AVPlayerViewModel
+
+    func makeUIViewController(context: Context) -> some UIViewController {
+        return viewModel.makePlayerViewController()
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        // Update the AVPlayerViewController as needed
+    }
+}
+```
+
+These components provide:
+- UIKit AVPlayerViewController integration with SwiftUI
+- Delegation handling for player events
+- Clean separation of player logic and view representation
+
+### 7. ImmersiveView
+
+The `ImmersiveView` provides an alternative immersive experience using RealityKitContent:
+
+```swift
+struct ImmersiveView: View {
+    @Environment(AppModel.self) var appModel
+    
+    var body: some View {
+        RealityView { content in
+            // Add the initial RealityKit content
+            if let immersiveContentEntity = try? await Entity(named: "Immersive", in: realityKitContentBundle) {
+                content.add(immersiveContentEntity)
+            }
+        }
+    }
+}
+```
+
+This view:
+- Uses RealityView to present 3D content
+- Loads named entities from a RealityKit content bundle
+- Integrates with an AppModel environment object
+
 ## Development Workflow
 
 ### Building and Running
@@ -135,136 +202,184 @@ struct ContentView: View {
 
 ### State Management
 
-The app uses SwiftUI's environment objects for state management. Based on your files, the VideoStreamManager is shared across different views:
+The app uses two different state management approaches as shown in your files:
+
+1. **SwiftUI Environment Objects** (for the 360° video player):
+   ```swift
+   // In PresenceApp.swift (inferred from your implementation)
+   @main
+   struct PresenceApp: App {
+       // Create a shared instance of VideoStreamManager
+       @StateObject private var videoStreamManager = VideoStreamManager()
+       
+       var body: some Scene {
+           WindowGroup {
+               ContentView()
+                   .environmentObject(videoStreamManager)
+           }
+           
+           ImmersiveSpace(id: "360Viewer") {
+               Immersive360View()
+                   .environmentObject(videoStreamManager)
+           }
+       }
+   }
+   ```
+
+2. **Observable Macro** (for the AVPlayer integration):
+   ```swift
+   @MainActor
+   @Observable
+   class AVPlayerViewModel: NSObject {
+       var isPlaying: Bool = false
+       private var avPlayerViewController: AVPlayerViewController?
+       private var avPlayer = AVPlayer()
+       // ...
+   }
+   ```
+
+3. **Environment Values** (for the ImmersiveView):
+   ```swift
+   struct ImmersiveView: View {
+       @Environment(AppModel.self) var appModel
+       // ...
+   }
+   ```
+
+These different approaches are used based on the specific needs of each component and integration pattern.
+
+## Video Playback Approaches
+
+Your code demonstrates multiple approaches to video playback:
+
+### 1. AVPlayer with Manual Texture Updates (Immersive360View)
+
+In this approach, you:
+- Create an AVPlayer with a local file
+- Set up an AVPlayerItemVideoOutput to extract frames
+- Use a CADisplayLink to time the frame extraction
+- Convert CVPixelBuffer frames to textures
+- Apply textures to a RealityKit material
 
 ```swift
-// In PresenceApp.swift (inferred from your implementation)
-@main
-struct PresenceApp: App {
-    // Create a shared instance of VideoStreamManager
-    @StateObject private var videoStreamManager = VideoStreamManager()
-    
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-                .environmentObject(videoStreamManager)
-        }
+// Set up player
+let player = AVPlayer(url: videoURL)
+self.player = player
+
+// Create a separate task for video setup
+Task {
+    do {
+        try await applyVideoTexture(to: sphere, with: player)
         
-        ImmersiveSpace(id: "360Viewer") {
-            Immersive360View()
-                .environmentObject(videoStreamManager)
-        }
+        // Start playback
+        player.play()
+    } catch {
+        // Handle errors
     }
 }
 ```
 
-This pattern allows sharing the VideoStreamManager across different views while maintaining a single source of truth for the application state.
+### 2. VideoStreamManager Approach
 
-## Working with 360° Videos
+This approach separates the video playback logic into a manager class:
 
-### Adding Video Content
+```swift
+func playLocalVideo(named name: String, withExtension ext: String) {
+    cleanupCurrentPlayback()
+    
+    // Find the video file
+    guard let fileURL = findVideoFile(name, ext) else {
+        return
+    }
+    
+    // Create a simple AVPlayer with the file URL
+    player = AVPlayer(url: fileURL)
+    player?.play()
+    isPlaying = true
+    
+    // Set up observers
+    setupObservers()
+}
+```
 
-1. **Adding Video Content**:
-   - Place 360° video files (in MP4 format) in the `Resources/Videos` directory
-   - Add reference to the video in the Xcode project:
-     - Right-click on the `Resources/Videos` group
-     - Select "Add Files to Presence..."
-     - Choose your video file
+### 3. UIKit AVPlayerViewController Integration (AVPlayerView and AVPlayerViewModel)
 
-2. **Video Format Requirements**:
-   - Format: MP4 (H.264 or HEVC)
-   - Resolution: 4K (3840×2160) or higher recommended
-   - Projection: Equirectangular (standard 360° video format)
+This approach wraps a UIKit AVPlayerViewController for playback:
 
-3. **Using VideoStreamManager for Playback**:
-   
-   To play local bundle videos (as shown in your ContentView):
-   ```swift
-   videoStreamManager.playLocalVideo(named: "Cable Car", withExtension: "mp4")
-   ```
-   
-   Controlling playback:
-   ```swift
-   // Play/pause
-   videoStreamManager.togglePlayPause()
-   
-   // Seek to specific time
-   videoStreamManager.seek(to: 30.0) // Seek to 30 seconds
-   ```
+```swift
+func makePlayerViewController() -> AVPlayerViewController {
+    let avPlayerViewController = AVPlayerViewController()
+    avPlayerViewController.player = avPlayer
+    avPlayerViewController.delegate = self
+    self.avPlayerViewController = avPlayerViewController
+    return avPlayerViewController
+}
 
-4. **Video Naming Considerations**:
+func play() {
+    guard !isPlaying, let videoURL else { return }
+    isPlaying = true
 
-   The VideoStreamManager includes fallback strategies for finding videos with different naming conventions, as shown in your code:
-   
-   ```swift
-   // Try with spaces
-   url = Bundle.main.url(forResource: name, withExtension: ext)
-   
-   // Try replacing spaces with underscores
-   if url == nil {
-       let nameWithoutSpaces = name.replacingOccurrences(of: " ", with: "_")
-       url = Bundle.main.url(forResource: nameWithoutSpaces, withExtension: ext)
-   }
-   
-   // Try without any special characters
-   if url == nil {
-       let nameSimplified = name.components(separatedBy: CharacterSet.alphanumerics.inverted).joined()
-       url = Bundle.main.url(forResource: nameSimplified, withExtension: ext)
-   }
-   ```
+    let item = AVPlayerItem(url: videoURL)
+    avPlayer.replaceCurrentItem(with: item)
+    avPlayer.play()
+}
+```
 
-## Immersive Space Implementation
+The SwiftUI integration is handled by a UIViewControllerRepresentable:
 
-The app uses visionOS's immersive spaces to create the 360° video experience, as shown in your files:
+```swift
+struct AVPlayerView: UIViewControllerRepresentable {
+    let viewModel: AVPlayerViewModel
 
-1. **Define the Immersive Space**:
-   ```swift
-   // In PresenceApp.swift (inferred from your implementation)
-   ImmersiveSpace(id: "360Viewer") {
-       Immersive360View()
-           .environmentObject(videoStreamManager)
-   }
-   ```
+    func makeUIViewController(context: Context) -> some UIViewController {
+        return viewModel.makePlayerViewController()
+    }
 
-2. **Launch the Immersive Space**:
-   From your ContentView.swift:
-   ```swift
-   @Environment(\.openImmersiveSpace) var openImmersiveSpace
-   
-   Button("Play 360° Video") {
-       videoStreamManager.playLocalVideo(named: "Cable Car", withExtension: "mp4")
-       Task {
-           isImmersiveViewPresented = true
-           await openImmersiveSpace(id: "360Viewer")
-       }
-   }
-   ```
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        // Update the AVPlayerViewController as needed
+    }
+}
+```
 
-3. **Exit the Immersive Space**:
-   From your PlaybackControlsView.swift:
-   ```swift
-   @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
-   
-   Button("Exit") {
-       Task {
-           await dismissImmersiveSpace()
-       }
-   }
-   ```
+## Multiple Immersive Experiences
 
-4. **Track Immersive Space State**:
-   From your ContentView.swift:
-   ```swift
-   // State to track whether the immersive space is open
-   @State private var isImmersiveViewPresented = false
-   
-   // Listen for dismissal notifications
-   .onAppear {
-       NotificationCenter.default.addObserver(forName: Notification.Name("ImmersiveSpaceDismissed"), object: nil, queue: .main) { _ in
-           isImmersiveViewPresented = false
-       }
-   }
-   ```
+Your code shows two different approaches to immersive experiences:
+
+### 1. Sphere-based 360° Video Playback (Immersive360View)
+
+This approach uses a RealityKit sphere with an inverted scale to display 360° video from the inside:
+
+```swift
+// Create a large sphere
+let sphere = ModelEntity(
+    mesh: .generateSphere(radius: 100),
+    materials: [SimpleMaterial(color: .blue, roughness: 0.0, isMetallic: false)]
+)
+
+// Make it visible from the inside
+sphere.scale = .init(x: -1, y: 1, z: 1)
+
+// Add to the scene
+content.add(sphere)
+
+// Try to load and play video
+playVideo(sphere: sphere)
+```
+
+### 2. RealityKit Content-based Experience (ImmersiveView)
+
+This approach loads pre-authored RealityKit content from a bundle:
+
+```swift
+RealityView { content in
+    // Add the initial RealityKit content
+    if let immersiveContentEntity = try? await Entity(named: "Immersive", in: realityKitContentBundle) {
+        content.add(immersiveContentEntity)
+    }
+}
+```
+
+These two approaches can be used for different types of immersive experiences within the app.
 
 ## Testing
 
@@ -315,11 +430,3 @@ The app includes several built-in debugging features, as seen in your code:
    debugMessage = "Video playing"
    debugMessage = "Error: \(error.localizedDescription)"
    ```
-
-## Resources
-
-- [Apple Developer Documentation](https://developer.apple.com/documentation/)
-- [visionOS Development](https://developer.apple.com/visionos/)
-- [RealityKit Framework](https://developer.apple.com/documentation/realitykit)
-- [AVFoundation Framework](https://developer.apple.com/documentation/avfoundation)
-- [SwiftUI Documentation](https://developer.apple.com/documentation/swiftui)
