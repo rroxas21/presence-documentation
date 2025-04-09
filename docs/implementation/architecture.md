@@ -233,15 +233,15 @@ The current implementation focuses on successfully loading and playing a 360° v
 
 ### Development Requirements
 
-- Xcode 15.0 or later
+- Xcode 16.0 or later
 - visionOS SDK
-- macOS Sonoma or later
+- macOS Sequoia or later
 - Apple Developer Program membership
 
 ### Deployment Requirements
 
 - Apple Vision Pro headset
-- visionOS 1.0 or later
+- visionOS 2.0 or later
 - Sufficient storage for bundled video assets
 
 ## Architecture Decisions and Rationale
