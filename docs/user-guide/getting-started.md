@@ -3,41 +3,12 @@
 Welcome to Presence, the virtual teleportation application for Apple Vision Pro. This guide will help you get started with experiencing 360° video environments and navigating the application.
 
 ## Table of Contents
-1. [Installation](#installation)
-2. [First Launch](#first-launch)
-3. [Launching Your First Experience](#launching-your-first-experience)
-4. [Navigating 360° Environments](#navigating-360-environments)
-5. [Using Playback Controls](#using-playback-controls)
-6. [Exiting an Experience](#exiting-an-experience)
-7. [Next Steps](#next-steps)
-
-## Installation
-
-### System Requirements
-
-Before installing Presence, ensure your system meets these requirements:
-
-- **Hardware**: Apple Vision Pro headset
-- **Operating System**: visionOS 1.0 or later
-- **Storage**: At least 2GB of free space for the application and included video content
-
-### Installation Process
-
-1. **From the App Store**:
-   - Open the App Store on your Apple Vision Pro
-   - Search for "Presence Virtual Teleportation"
-   - Tap "Get" and follow the prompts to download and install
-
-2. **For Test Flight Users**:
-   - Ensure you've received and accepted the TestFlight invitation
-   - Open the TestFlight app on your Apple Vision Pro
-   - Find Presence in your available apps and tap "Install"
-
-3. **For Developers**:
-   - Clone the repository to your development Mac
-   - Open the project in Xcode
-   - Connect your Apple Vision Pro
-   - Build and run the application directly to your device
+1. [First Launch](#first-launch)
+2. [Launching Your First Experience](#launching-your-first-experience)
+3. [Navigating 360° Environments](#navigating-360-environments)
+4. [Using Playback Controls](#using-playback-controls)
+5. [Exiting an Experience](#exiting-an-experience)
+6. [Next Steps](#next-steps)
 
 ## First Launch
 
