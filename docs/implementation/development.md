@@ -10,7 +10,7 @@ Presence/
 │   └── PresenceApp.swift     # Main app entry point
 ├── Views/                    # SwiftUI views
 │   ├── ContentView.swift     # Main interface
-│   ├── PlaybackControlsView.swift # Video playback controls
+│   ├── AVPlaybackControlsView.swift # Video playback controls
 │   ├── Immersive360View.swift # 360° video immersive view
 │   ├── ImmersiveView.swift   # Alternative immersive view using RealityKitContent
 │   └── AVPlayerView.swift    # UIKit player wrapper
