@@ -7,8 +7,7 @@ This guide provides instructions for installing this application on an Apple Vis
 - [Prerequisites](#prerequisites)
 - [Installation Methods](#installation-methods)
   - [Method 1: Via Xcode](#method-1-via-xcode)
-  - [Method 2: From Google Drive](#method-2-from-google-drive)
-  - [Method 3: From GitHub](#method-3-from-github)
+  - [Method 2: From GitHub](#method-3-from-github)
 - [Troubleshooting](#troubleshooting)
 - [Support](#support)
 
