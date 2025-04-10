@@ -30,7 +30,7 @@ Presence/
 
 ### 1. VideoStreamManager
 
-The `VideoStreamManager` class is the central component for video handling, as shown in your implementation:
+The `VideoStreamManager` class is the central component for video handling:
 
 ```swift
 class VideoStreamManager: ObservableObject {
@@ -250,7 +250,7 @@ These different approaches are used based on the specific needs of each componen
 
 ## Video Playback Approaches
 
-Your code demonstrates multiple approaches to video playback:
+Multiple approaches to video playback:
 
 ### 1. AVPlayer with Manual Texture Updates (Immersive360View)
 
@@ -404,7 +404,7 @@ For complete testing with actual performance metrics:
 
 ### Debugging Video Playback
 
-The app includes several built-in debugging features, as seen in your code:
+The app includes several built-in debugging features:
 
 1. **Console Logging**: 
    ```swift
