@@ -14,8 +14,6 @@ Welcome to Presence, the virtual teleportation application for Apple Vision Pro.
 
 When you first launch Presence, you'll see the home screen with the following elements:
 
-![Home Screen Layout](../assets/home_screen.png)
-
 1. **App Title**: "360° Video Viewer" appears at the top of the screen
 2. **App Icon**: A 360° icon is displayed prominently
 3. **Main Action Button**: "Play 360° Video" button to start your experience
@@ -43,8 +41,6 @@ Once inside a 360° environment, you can look around in any direction:
 ## Using Playback Controls
 
 While in the 360° environment, you'll have access to playback controls:
-
-![Playback Controls](../assets/playback_controls.png)
 
 1. **Progress Bar**: Shows your current position in the video
    - Drag the white circle to scrub to a different position
