@@ -61,7 +61,7 @@ Before proceeding with any installation method, ensure you have the following:
 2. Navigate to your preferred directory.
 3. Clone the repository using the following command:
    ```bash
-   git clone https://github.com/username/repo-name.git
+   git clone https://github.com/rroxas21/presence.git
    ```
 4. Navigate to the project directory:
    ```bash
