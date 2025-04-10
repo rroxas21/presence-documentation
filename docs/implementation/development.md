@@ -343,7 +343,7 @@ struct AVPlayerView: UIViewControllerRepresentable {
 
 ## Multiple Immersive Experiences
 
-Your code shows two different approaches to immersive experiences:
+Two different approaches to immersive experiences:
 
 ### 1. Sphere-based 360° Video Playback (Immersive360View)
 
