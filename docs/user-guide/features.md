@@ -105,3 +105,5 @@ For users interested in technical details, the application provides:
 - **Status Messages**: Visual feedback about video loading and playback state
 - **Error Reporting**: Clear indications when issues occur with file loading or playback
 - **Playback Status**: Real-time information about the current state of the video player
+
+← [Getting Started](getting-started.md) | [Troubleshooting](troubleshooting.md) →
