@@ -7,6 +7,7 @@ This document outlines specific technical implementations for enhancing the virt
 ## Enhancing Co-Presence in Real Time
 
 ### Live Streaming Implementation
+These are under heavy consideration. It might be best to actually try to implement live streaming first then worry about the optimizations, latency and bandwidth management.
 
 - **WebRTC Integration**: 
   - Utilize `WebRTCKit` and `Network.framework` to establish peer-to-peer connections
@@ -34,11 +35,6 @@ This document outlines specific technical implementations for enhancing the virt
   - Use `HTTP/3` via `URLSession` configuration with `URLSessionConfiguration.quicEnabled`
 
 ### Presence Indicators
-
-- **Avatars**: 
-  - Utilize `PersonSegmentation` from the Vision framework to isolate user figures
-  - Implement ARKit's `ARBodyTrackingConfiguration` for skeletal tracking
-  - Use `RealityKit.Entity` with animated `ModelComponent` for rendering
 
 - **Spatial Positioning**: 
   - Leverage `ARKit's` spatial anchors with `ARWorldMap` sharing
