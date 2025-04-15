@@ -116,3 +116,5 @@ Before proceeding with any installation method, ensure you have the following:
 - Clean the build folder (`Shift + ⌘ + K`) and rebuild the project.
 - Verify that all dependencies are correctly installed and compatible.
 </details>
+
+← [Overview](overview.md) | [Getting Started](user-guide/getting-started.md) →
