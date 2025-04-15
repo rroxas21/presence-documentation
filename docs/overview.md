@@ -52,3 +52,5 @@ In future versions, Presence will incorporate live streaming technology to captu
 ## Version History
 - **0.9.0 (Beta)** - Initial release with pre-recorded environment functionality
 - [Future versions to be added]
+
+← [README](../README.md) | [Installation](installation.md) →
