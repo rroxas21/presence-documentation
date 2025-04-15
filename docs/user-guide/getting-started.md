@@ -84,3 +84,5 @@ Now that you're familiar with the basics of Presence, here are some suggestions 
 For more detailed information about all available features, see the [Features Documentation](features.md).
 
 If you encounter any issues while using Presence, refer to the [Troubleshooting Guide](troubleshooting.md).
+
+← [Installation](../installation.md) | [Features](features.md) →
