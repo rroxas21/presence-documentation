@@ -430,3 +430,4 @@ The app includes several built-in debugging features:
    debugMessage = "Video playing"
    debugMessage = "Error: \(error.localizedDescription)"
    ```
+← [Architecture](architecture.md) | [Modification](modification.md) →
