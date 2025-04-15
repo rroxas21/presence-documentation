@@ -1,7 +1,5 @@
 # Considerations for Future Development
 
-← [Modification](implementation/modification.md) | [Resources](resources.md) →
-
 This document outlines specific technical implementations for enhancing the virtual teleportation experience on Apple Vision Pro, focusing on real-time co-presence and shared interactions with physical and virtual objects.
 
 ## Enhancing Co-Presence in Real Time
@@ -114,6 +112,7 @@ These are under heavy consideration. It might be best to actually try to impleme
   - Create a comprehensive gesture system using `Vision` pose estimation
 
 ### Technical Challenges
+No need to worry but at least be aware of
 
 - **Calibration**: 
   - Implement `ARKit`'s world map sharing for spatial alignment
@@ -140,3 +139,4 @@ These are under heavy consideration. It might be best to actually try to impleme
   - Implement `dispatch_queue_t` with QoS classifications for prioritizing tasks
   - Use `os_signpost` for performance monitoring and optimization
 
+← [Modification](implementation/modification.md) | [Resources](resources.md) →
