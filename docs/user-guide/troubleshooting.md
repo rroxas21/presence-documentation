@@ -494,3 +494,5 @@ This guide addresses common issues that users and developers might encounter wit
    - Look for objects that aren't being released properly
 
 By following these troubleshooting steps, both users and developers should be able to identify and resolve most issues with the Presence application.
+
+← [Features](features.md) | [Architecture](../implementation/architecture.md) →
