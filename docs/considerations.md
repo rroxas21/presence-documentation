@@ -90,6 +90,7 @@ This document outlines specific technical implementations for enhancing the virt
   - Create custom physics using `GameplayKit` behavior trees and `simd` math
 
 ### Virtual Object Co-Manipulation
+(These are all things that I have just looked up examples of but am not sure about commiting to the implementation of so feel free to ignore)
 
 - **Synchronized State Management**: 
   - Implement `MultipeerConnectivity` for local network communication
