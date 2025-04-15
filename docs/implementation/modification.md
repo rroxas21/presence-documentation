@@ -430,3 +430,4 @@ Use the existing debug features in the app to help with testing:
    print("Video loaded successfully: \(url.lastPathComponent)")
    print("Current state: \(isPlaying ? "playing" : "paused"), time: \(currentTime)/\(duration)")
    ```
+← [Development](development.md) | [Resources](../resources.md) →
