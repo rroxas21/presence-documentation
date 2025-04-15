@@ -251,4 +251,4 @@ The current implementation focuses on successfully loading and playing a 360° v
 3. **Task-based Asynchronous Processing**: Utilizes Swift's modern concurrency model for better performance and code organization.
 4. **Component-based Architecture**: Separates video processing logic (VideoUpdater) from view components for better maintainability.
 
-← [Architecture](architecture.md) | [Modification](modification.md) →
+← [Troubleshooting](../user-guide/troubleshooting.md) | [Development](development.md) →
