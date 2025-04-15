@@ -31,3 +31,5 @@ This document provides a collection of useful external resources for developing 
 ### Community Resources
 - [Apple Developer Forums - visionOS](https://developer.apple.com/forums/tags/visionos)
 - [Stack Overflow - visionOS](https://stackoverflow.com/questions/tagged/visionos)
+
+← [Modification](implementation/modification.md) | [Glossary](../glossary.md) →
